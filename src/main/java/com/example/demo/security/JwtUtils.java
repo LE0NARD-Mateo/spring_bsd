@@ -18,4 +18,15 @@ public class JwtUtils {
 
     }
 
+    public String getEmailFromJwt(String jwt) {
+
+        return Jwts.parser()
+                .setSigningKey("azerty")
+                .parseClaimsJws(jwt)
+                .getBody()
+                .getSubject();
+
+
+    }
+
 }
