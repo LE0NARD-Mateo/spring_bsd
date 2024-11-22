@@ -2,12 +2,14 @@ package com.example.demo.controller;
 
 import com.example.demo.dao.UtilisateurDao;
 import com.example.demo.model.Utilisateur;
+import com.example.demo.security.AppUserDetails;
 import com.example.demo.security.IsAdmin;
 import com.example.demo.security.IsUser;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -95,6 +97,13 @@ public class UtilisateurController {
 
         return new ResponseEntity<>(optionalUtilisateur.get(), HttpStatus.OK);
 
+    }
+
+    @IsUser
+    @GetMapping("/profil")
+    public ResponseEntity<Utilisateur> Profil(@AuthenticationPrincipal AppUserDetails userDetails) {
+
+        return ResponseEntity.ok(userDetails.getUtilisateur());
     }
 
 }
